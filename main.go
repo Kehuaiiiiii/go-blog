@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/config"
 	"github.com/astaxie/beego/orm"
@@ -19,19 +20,20 @@ func init() {
 		logrus.Fatalf(err.Error())
 	}
 
-	database,_ := db.NewDataBase(conf.String("db::dbType"))
+	database, _ := db.NewDataBase(conf.String("db::dbType"))
 	orm.RegisterDriver(database.GetDriverName(), database.GetDriver())
 	orm.RegisterDataBase(database.GetAliasName(), database.GetDriverName(), database.GetStr())
 
 	beego.AddFuncMap("IndexForOne", utils.IndexForOne)
-	beego.AddFuncMap("IndexAddOne",utils.IndexAddOne)
-	beego.AddFuncMap("IndexDecrOne",utils.IndexDecrOne)
-	beego.AddFuncMap("StringReplace",utils.StringReplace)
-	beego.AddFuncMap("TimeStampToTime",utils.TimeStampToTime)
+	beego.AddFuncMap("IndexAddOne", utils.IndexAddOne)
+	beego.AddFuncMap("IndexDecrOne", utils.IndexDecrOne)
+	beego.AddFuncMap("StringReplace", utils.StringReplace)
+	beego.AddFuncMap("TimeStampToTime", utils.TimeStampToTime)
 
 }
 
 func main() {
+	fmt.Println("Server begin......")
 	//bee generate appcode -tables="cron" -driver=mysql -conn="root:root@tcp(127.0.0.1:3306)/blog" -level=3
 	beego.Run()
 }
